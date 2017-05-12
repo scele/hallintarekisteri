@@ -26,6 +26,7 @@ class Game extends Phaser.Game {
     console.log("Preload...");
     this.load.spritesheet('hammer', 'graphics/hammer.ss.png', 742, 600);
     this.load.spritesheet('bug', 'graphics/bug_squash.ss.png', 774, 922);
+    this.load.spritesheet('hero', 'graphics/hero_squash.ss.png', 578, 575);
     this.load.image('bg', 'graphics/bg2.jpg');
   }
 }
