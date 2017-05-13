@@ -35,7 +35,7 @@ class Hammer extends Phaser.Sprite {
 
   update() {
     if (this._target) {
-        const speed = this.game.time.physicsElapsed * 2000;
+        const speed = this.game.time.physicsElapsed * 2000 * (this.game.width / 1280);
         const dir = Phaser.Point.subtract(this._target.position, this.position);
         if (dir.getMagnitudeSq() > speed * speed) {
             dir.setMagnitude(speed);

@@ -1,6 +1,6 @@
 export default class Bug extends Phaser.Sprite {
 
-  constructor(game, x, y, frame, onClick, onDefeat) {
+  constructor(game, x, y, frame, events) {
     const initialPos = { x: game.world.centerX, y: game.world.centerY * 1.2 };
     const initialScale = { x: 0.1, y: 0.1 };
     super(game, initialPos.x, initialPos.y, 'bug');
@@ -18,8 +18,7 @@ export default class Bug extends Phaser.Sprite {
 
     this._squash = this.game.add.audio('squash');
     this._squash.volume = 0.5;
-    this._onClick = onClick;
-    this._onDefeat = onDefeat;
+    this._events = events;
     this._age = 0;
     this._frozen = false;
     this._walking = true;
@@ -36,7 +35,7 @@ export default class Bug extends Phaser.Sprite {
         const center = { x: this.game.world.centerX, y: this.game.world.centerY + this.height / this.scale.x / 2 };
         this.game.add.tween(this.scale).to({x: 1, y: 1}, 0, Phaser.Easing.Exponential.Out, true, 0);
         this.game.add.tween(this.position).to(center, 0, Phaser.Easing.Exponential.Out, true, 0);
-        this._onDefeat(this);
+        this._events.onDefeat(this);
       } else if (this._age >= 2) {
         this.angle = 3 * Math.cos(this.game.time.time / 15);
       } else if (this._walking) {
@@ -55,12 +54,13 @@ export default class Bug extends Phaser.Sprite {
                       //this.game.add.tween(this.position).to({y: this.y + this.height/2}, 0, Phaser.Easing.Exponential.Out, true, 200);
         tween.onComplete.add(() => this.destroy());
         this._squash.play();
+        this._events.onSquash(this);
       }
   }
 
   onInputDown() {
     if (!this._frozen) {
-      this._onClick(this);
+      this._events.onClick(this);
     }
   }
 }
