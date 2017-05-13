@@ -2,19 +2,19 @@ class Hammer extends Phaser.Sprite {
 
   constructor(game, x, y) {
     super(game, x, y, 'hammer');
-    this.animations.add('hit', [0, 1, 2, 3, 4, 4, 4, 4, 3, 2, 1]);
+    this.animations.add('hit', [0, 1, 2, 3, 4, 5, 6, 6, 6, 6, 6, 6, 6, 5, 4, 3, 2, 1]);
     this.game.stage.addChild(this);
-    this.anchor.setTo(0.4, 0.8);
+    this.anchor.setTo(0.4, 0.9);
     this.frame = 0;
     this.scale.setTo(0.5, 0.5);
-    const avatar = new Phaser.Sprite(this.game, 400, -30, 'hero', 1);
-    avatar.scale.setTo(0.3, 0.3);
-    avatar.anchor.setTo(0.5, 0.5);
-    this.addChild(avatar);
+    //const avatar = new Phaser.Sprite(this.game, 400, -30, 'hero', 1);
+    //avatar.scale.setTo(0.3, 0.3);
+    //avatar.anchor.setTo(0.5, 0.5);
+    //this.addChild(avatar);
   }
 
   hit() {
-      this.animations.play('hit', 30, false);
+      this.animations.play('hit', 60, false);
   }
 
   squashBug(bug) {

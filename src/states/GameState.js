@@ -33,6 +33,7 @@ class GameState extends Phaser.State {
       this.stageDuration = 0;
       this.spawnScale = this.spawnScale * 0.7;
     }
+    this.bugs.sort('y');
   }
 
   onDefeat(bug) {
@@ -49,8 +50,9 @@ class GameState extends Phaser.State {
       let center = { x: this.game.world.centerX, y: this.game.world.centerY }
       const character = this.game.rnd.between(0, 5);
       const x = this.game.rnd.between(100, this.game.world.width-200);
-      const y = this.game.rnd.between(this.game.world.height * 0.4, this.game.world.height - 100);
-      this.bugs.add(new Bug(this.game, x, y, character, (bug) => this.bugClicked(bug), (bug) => this.onDefeat(bug)));
+      const y = this.game.rnd.between(this.game.world.height * 0.6, this.game.world.height);
+      const newBug = new Bug(this.game, x, y, character, (bug) => this.bugClicked(bug), (bug) => this.onDefeat(bug));
+      this.bugs.add(newBug);
       if (this.bugs.countLiving() < 20) {
         this.scheduleNextSpawn(); 
       }
