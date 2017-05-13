@@ -47,15 +47,8 @@ class GameState extends Phaser.State {
 
   scheduleNextSpawn() {
     const scale = (1 + this.game.rnd.frac()) * this.spawnScale;
-    //const sound = this.talkClips[this.game.rnd.between(0, this.talkClips.length - 1)];
     console.log("Next bug will appear in " + scale + " seconds.");
-    //this.game.time.events.add(Math.max(0, Phaser.Timer.SECOND * (scale - 0.5)), () => this.startTalk(sound));
     this.game.time.events.add(Phaser.Timer.SECOND * scale, () => this.spawnBug());
-  }
-
-  startTalk(sound) {
-    //sound.loopFull(0);
-    //sound.fadeTo(2500, 0.5);
   }
 
   update() {
