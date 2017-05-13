@@ -8,7 +8,7 @@ class Hammer extends Phaser.Sprite {
     this.anchor.setTo(0.4, 0.9);
     this.frame = 0;
     this.scale.setTo(0.5, 0.5);
-    this._home = {x: this.game.world.right - this.anchor.x * this.width, y: this.game.world.bottom};
+    this._home = {x: this.game.world.right - this.anchor.x * this.width * 1.4, y: this.game.world.bottom};
     this.position.setTo(this._home.x, this._home.y);
     //const avatar = new Phaser.Sprite(this.game, 400, -30, 'hero', 1);
     //avatar.scale.setTo(0.3, 0.3);

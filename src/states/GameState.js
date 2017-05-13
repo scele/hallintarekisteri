@@ -1,17 +1,19 @@
 import Hammer from 'objects/Hammer';
 import Bug from 'objects/Bug';
 
-const STAGE_DURATION = 10;
+const STAGE_DURATION = 5;
 
 const BUGS = [
-  { name: 'Juha', party: 'Keskusta' },
-  { name: 'Alex', party: 'Kokoomus' },
-  { name: 'Sampo', party: 'Perussuomalaiset' },
-  { name: 'Petteri', party: 'Kokoomus' },
-  { name: 'Juha', party: 'Keskusta' },
-  { name: 'Juhana', party: 'Kokoomus' },
-  { name: 'Juhana', party: 'Kokoomus' },
-  { name: 'Alex', party: 'Kokoomus' },
+  { index: 0, name: 'Juha', party: 'Keskusta' },
+  { index: 1, name: 'Anne', party: 'Keskusta' },
+  { index: 2, name: 'Juha', party: 'Keskusta' },
+  { index: 3, name: 'Sampo', party: 'Perussuomalaiset' },
+  { index: 4, name: 'Kaj', party: 'Perussuomalaiset' },
+  { index: 5, name: 'Alex', party: 'Kokoomus' },
+  { index: 6, name: 'Juhana', party: 'Kokoomus' },
+  { index: 7, name: 'Alex', party: 'Kokoomus' },
+  { index: 8, name: 'Harri', party: 'Kokoomus' },
+  { index: 10, name: 'Petteri', party: 'Kokoomus' },
 ];
 
 class GameState extends Phaser.State {
@@ -44,7 +46,7 @@ class GameState extends Phaser.State {
   }
 
   scheduleNextSpawn() {
-    const scale = this.game.rnd.frac() * this.spawnScale;
+    const scale = (1 + this.game.rnd.frac()) * this.spawnScale;
     //const sound = this.talkClips[this.game.rnd.between(0, this.talkClips.length - 1)];
     console.log("Next bug will appear in " + scale + " seconds.");
     //this.game.time.events.add(Math.max(0, Phaser.Timer.SECOND * (scale - 0.5)), () => this.startTalk(sound));
@@ -60,7 +62,7 @@ class GameState extends Phaser.State {
     this.stageDuration += this.game.time.physicsElapsed;
     if (this.stageDuration > STAGE_DURATION) {
       this.stageDuration = 0;
-      this.spawnScale = this.spawnScale * 0.7;
+      this.spawnScale = this.spawnScale * 0.5;
     }
     this.bugs.sort('y');
 
@@ -84,13 +86,17 @@ class GameState extends Phaser.State {
   spawnBug() {
     if (!this.gameOver) {
       let center = { x: this.game.world.centerX, y: this.game.world.centerY }
-      const character = this.game.rnd.between(0, BUGS.length);
-      const x = this.game.rnd.between(100, this.game.world.width-200);
-      const y = this.game.rnd.between(this.game.world.height * 0.6, this.game.world.height);
-      const newBug = new Bug(this.game, x, y, character, (bug) => this.bugClicked(bug), (bug) => this.onDefeat(bug));
-      this.bugs.add(newBug);
-      this.talkClips.forEach((s) => { s.fadeTo(500, 1); });
-      this.tick.volume = 0;
+      const availableBugs = BUGS.filter(x => !this.bugs.children.find(y => y.meta === x));
+      const character = this.game.rnd.pick(availableBugs);
+      if (character) {
+        const x = this.game.rnd.between(100, this.game.world.width-200);
+        const y = this.game.rnd.between(this.game.world.height * 0.6, this.game.world.height);
+        const newBug = new Bug(this.game, x, y, character.index, (bug) => this.bugClicked(bug), (bug) => this.onDefeat(bug));
+        newBug.meta = character;
+        this.bugs.add(newBug);
+        this.talkClips.forEach((s) => { s.fadeTo(500, 1); });
+        this.tick.volume = 0;
+      }
       if (this.bugs.countLiving() < 20) {
         this.scheduleNextSpawn(); 
       }
