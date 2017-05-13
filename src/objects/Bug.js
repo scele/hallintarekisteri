@@ -12,10 +12,12 @@ export default class Bug extends Phaser.Sprite {
     this.events.onInputDown.add(() => this.onInputDown());
     const targetScale = 0.3 * y / this.game.world.height;
 
-    const tween = this.game.add.tween(this.position).to({x: x,    y: y   }, 0, Phaser.Easing.Linear.Out, true, 0);
-                  this.game.add.tween(this.scale)   .to({x: targetScale, y: targetScale}, 0, Phaser.Easing.Linear.Out, true, 0);
+    const tween = this.game.add.tween(this.position).to({x: x,    y: y   }, 0, Phaser.Easing.Linear.InOut, true, 0);
+                  this.game.add.tween(this.scale)   .to({x: targetScale, y: targetScale}, 0, Phaser.Easing.Linear.InOut, true, 0);
     tween.onComplete.add(() => { this._walking = false; });
 
+    this._squash = this.game.add.audio('squash');
+    this._squash.volume = 0.5;
     this._onClick = onClick;
     this._onDefeat = onDefeat;
     this._age = 0;
@@ -52,6 +54,7 @@ export default class Bug extends Phaser.Sprite {
         const tween = this.game.add.tween(this.scale).to({y: 0}, 200, Phaser.Easing.Quadratic.Out, true, 100);
                       //this.game.add.tween(this.position).to({y: this.y + this.height/2}, 0, Phaser.Easing.Exponential.Out, true, 200);
         tween.onComplete.add(() => this.destroy());
+        this._squash.play();
       }
   }
 
