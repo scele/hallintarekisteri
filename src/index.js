@@ -39,8 +39,7 @@ class Game extends Phaser.Game {
   preload() {
     console.log("Preload...");
     this.load.spritesheet('hammer', 'graphics/hammer.ss.png', 742, 641);
-    this.load.spritesheet('bug', 'graphics/bug_squash.ss.png', 774, 922);
-    this.load.spritesheet('hero', 'graphics/hero_squash.ss.png', 578, 575);
+    this.load.spritesheet('bug', 'graphics/bug_squash.ss.png', 464, 553);
     this.load.spritesheet('party', 'graphics/logos_squash.ss.png', 600, 600);
     this.load.spritesheet('restart', 'graphics/restart.png', 497, 99);
     this.load.image('bg', 'graphics/bg2.jpg');
@@ -52,8 +51,6 @@ class Game extends Phaser.Game {
     this.load.audio('talk1', 'sounds/stubb1.mp3');
     this.load.audio('talk2', 'sounds/stubb2.mp3');
     this.load.audio('talk3', 'sounds/jaskari.mp3');
-    this.load.audio('talk4', 'sounds/orpo.mp3');
-    this.load.audio('talk5', 'sounds/hetemaki.mp3');
   }
 }
 
