@@ -113,7 +113,7 @@ class GameState extends Phaser.State {
   }
 
   restart() {
-    this.game.state.start('IntroState');
+    this.game.state.start('GameState');
   }
 
   spawnBug() {
