@@ -5,7 +5,7 @@ class Game extends Phaser.Game {
 
   constructor() {
     console.log("Constructor");
-    super(1280, 1020, Phaser.AUTO, 'content', {
+    super(1280, 1020, Phaser.CANVAS, 'content', {
       create: () => { console.log("Create!"); this.create2(); },
       preload: () => { console.log("Preload1"); this.preload(); },
       resize: () => this.resize(),
