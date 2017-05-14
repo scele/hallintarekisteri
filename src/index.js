@@ -1,14 +1,16 @@
 import GameState from 'states/GameState';
+import IntroState from 'states/IntroState';
 
 class Game extends Phaser.Game {
 
   constructor() {
     console.log("Constructor");
-    super(1280, 1020, Phaser.CANVAS, 'content', {
+    super(1280, 1020, Phaser.AUTO, 'content', {
       create: () => { console.log("Create!"); this.create2(); },
       preload: () => { console.log("Preload1"); this.preload(); },
       resize: () => this.resize(),
     });
+    this.state.add('IntroState', IntroState, false);
     this.state.add('GameState', GameState, false);
   }
 
@@ -18,6 +20,7 @@ class Game extends Phaser.Game {
   create2() {
     console.log("Create...");
     this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    this.stage.backgroundColor = '#ffffff';
 
     const clips = [];
     for (let i = 0; i < 4; i++) {
@@ -30,7 +33,7 @@ class Game extends Phaser.Game {
   }
 
   start() {
-    this.state.start('GameState');
+    this.state.start('IntroState');
   }
 
   preload() {

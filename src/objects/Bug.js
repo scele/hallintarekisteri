@@ -17,7 +17,7 @@ export default class Bug extends Phaser.Sprite {
     tween.onComplete.add(() => { this._walking = false; });
 
     this._squash = this.game.add.audio('squash');
-    this._squash.volume = 0.5;
+    this._squash.volume = 0.3;
     this._events = events;
     this._age = 0;
     this._frozen = false;

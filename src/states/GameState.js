@@ -14,7 +14,7 @@ const BUGS = [
   { index:  6, name: 'Juhana',  party: 0 },
   { index:  7, name: 'Alex',    party: 0 },
   { index:  8, name: 'Harri',   party: 0 },
-  { index: 10, name: 'Petteri', party: 0 },
+  { index:  9, name: 'Petteri', party: 0 },
 ];
 
 class GameState extends Phaser.State {
@@ -37,7 +37,7 @@ class GameState extends Phaser.State {
     border.drawRect(0, 0, this.game.width, headerHeight, 0);
     border.endFill();
     this._scoreboard = new Scoreboard(this.game);
-    this.game.stage.addChild(this._scoreboard);
+    this.game.add.existing(this._scoreboard);
 
     this._scores = [0, 0, 0];
     this.tick = this.game.add.audio('clock');
@@ -110,12 +110,10 @@ class GameState extends Phaser.State {
     btn.anchor.x = 0.5;
     btn.scale.x = 0.5;
     btn.scale.y = 0.5;
-
-    //this.state.start('GameState');
   }
 
   restart() {
-    window.location.reload();
+    this.game.state.start('IntroState');
   }
 
   spawnBug() {
